@@ -1,8 +1,16 @@
+<<<<<<< HEAD
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
 import authRoutes from "./routes/auth.js";
+=======
+import express from 'express';
+import mongoose from 'mongoose';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import authRoutes from './routes/auth.js';
+>>>>>>> 8f2c29c (updates)
 
 dotenv.config();
 

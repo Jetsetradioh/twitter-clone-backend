@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 import express from "express";
 import User from "../models/User.js";
+=======
+import express from 'express';
+import User from '../models/User.js';
+>>>>>>> 8f2c29c (updates)
 
 const router = express.Router();
 
