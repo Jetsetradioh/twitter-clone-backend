@@ -20,15 +20,17 @@ const users = [
 
 app.post("/login", async (req, res) => {
   const user = req.body;
+
   const { name, password } = user;
 
   for (let i = 0; i < users.length; i++) {
-    if (users[i].name == name) {
+    if (users[i].name === name) {
       if (users[i].password === password) {
         res.json(user);
       } else {
         res.status(401).json({ message: "Wrong password" });
       }
+      break;
     }
   }
 });
