@@ -12,8 +12,20 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+<<<<<<< HEAD
 app.use('/api', Routes);
 
+=======
+const users = [
+  { name: "Anders", password: "hej123" },
+  { name: "Karl", password: "hej1" },
+];
+
+app.post("/login", async (req, res) => {
+  console.log(req.body);
+app.use('/api', Routes);
+});
+>>>>>>> main
 app.get("/test", async (req, res) => {
   console.log("test!");
 });
