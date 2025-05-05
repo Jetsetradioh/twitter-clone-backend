@@ -1,5 +1,5 @@
-import express from "express";
-import mongoose from "mongoose";
+import express from 'express';
+import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import authRoutes from './routes/auth';
@@ -12,10 +12,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-<<<<<<< HEAD
-app.use('/api', Routes);
+app.use('/api', authRoutes);
 
-=======
 const users = [
   { name: "Anders", password: "hej123" },
   { name: "Karl", password: "hej1" },
@@ -25,7 +23,6 @@ app.post("/login", async (req, res) => {
   console.log(req.body);
 app.use('/api', Routes);
 });
->>>>>>> main
 app.get("/test", async (req, res) => {
   console.log("test!");
 });
