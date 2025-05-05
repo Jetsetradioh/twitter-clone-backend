@@ -21,4 +21,17 @@ router.post("/signup", async (req, res) => {
   }
 });
 
+<<<<<<< HEAD
 export default router;
+=======
+router.get('/signup', async (req, res) => {
+    try {
+        const users = await User.find();
+        res.status(200).json(users);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+export default router;
+>>>>>>> bc47658 (auth.js ändringar)
