@@ -32,7 +32,7 @@ router.post("/login", async (req, res) => {
       password: password,
     }).lean();
     if (foundUser) {
-      res.json({ foundUser: foundUser.username });
+      res.json({ foundUser: foundUser });
     } else {
       res.status(401).json({ message: "Wrong password!" });
     }

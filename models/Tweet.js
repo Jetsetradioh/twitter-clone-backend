@@ -4,8 +4,8 @@ const tweetSchema = new mongoose.Schema(
   {
     userId: {
       type: mongoose.Schema.Types.ObjectId, // Koppling till User
-      ref: "User",
       required: true,
+      ref: "User",
     },
     tweets: {
       type: String,
