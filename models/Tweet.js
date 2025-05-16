@@ -7,7 +7,16 @@ const tweetSchema = new mongoose.Schema(
       required: true,
       ref: "User",
     },
-    tweets: {
+    username: {
+      type: String,
+      required: true,
+    },
+    name: {
+      type: String,
+      required: true,
+      default: "User",
+    },
+    content: {
       type: String,
       required: true,
       maxlength: 140,
@@ -25,10 +34,6 @@ const tweetSchema = new mongoose.Schema(
       default: 0,
     },
     comments: {
-      type: Number,
-      default: 0,
-    },
-    views: {
       type: Number,
       default: 0,
     },
