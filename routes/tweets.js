@@ -19,11 +19,10 @@ router.get("/tweets/:id", async (req, res) => {
 
 //Skapa en tweet
 router.post("/tweet/:id", async (req, res) => {
-  console.log(req.params.id);
-  console.log(req.body);
   const newTweet = Tweet.create({
     userId: req.params.id,
     name: req.body[0].name,
+    image: req.body[0].profileImage,
     username: req.body[0].username,
     content: req.body[1].message,
   });

@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import authRoutes from "./routes/auth.js";
 import userRoutes from "./routes/user.js";
-//import tweetRoutes from "./routes/tweets.js";
+import tweetRoutes from "./routes/tweets.js";
 
 dotenv.config();
 
@@ -15,7 +15,7 @@ app.use(cors());
 app.use(express.json());
 app.use("/api", authRoutes);
 app.use("/api", userRoutes);
-//app.use("/api", tweetRoutes);
+app.use("/api", tweetRoutes);
 
 mongoose
   .connect("mongodb://localhost:27017/twitter")
