@@ -9,12 +9,15 @@ router.get("/tweets/:id", async (req, res) => {
   const id = req.params.id;
   const tweets = await Tweet.find({ userId: id }).lean();
   res.json(tweets);
+});
 
-  /*
-
-  const alltweets = await Tweet.find().lean();
-  res.json(alltweets);
-  */
+router.get("/tweet/forYou", async (req, res) => {
+  const tweets = await Tweet.find().limit(15).lean();
+  res.json(tweets);
+  console.log("test");
+});
+router.get("/tweet/following", async (req, res) => {
+  console.log("test");
 });
 
 //Skapa en tweet
