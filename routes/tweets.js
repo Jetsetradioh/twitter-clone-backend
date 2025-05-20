@@ -13,7 +13,6 @@ router.get("/tweets/:id", async (req, res) => {
 
 //visa foryou
 router.get("/tweet/forYou/:id", async (req, res) => {
-  console.log(req.params.id);
   const tweets = await Tweet.find({ userId: { $ne: req.params.id } })
     .limit(15)
     .lean();
