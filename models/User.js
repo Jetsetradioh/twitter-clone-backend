@@ -37,11 +37,13 @@ const userSchema = new mongoose.Schema(
     },
     profileImage: {
       type: String,
-      default: "",
+      default:
+        "https://preview.redd.it/7ayjc8s4j2n61.png?auto=webp&s=609a58fa21d46424879ee44156e44e0404940583",
     },
     bannerImage: {
       type: String,
-      default: "",
+      default:
+        "https://www.smartt.com/sites/default/files/2020-06/twitter_logo_banner_12.jpg",
     },
     tweetsCount: {
       type: Number,
