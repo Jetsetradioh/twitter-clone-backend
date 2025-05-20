@@ -26,6 +26,7 @@ router.post("/tweet/:id", async (req, res) => {
   const newTweet = Tweet.create({
     userId: req.params.id,
     name: req.body[0].name,
+    image: req.body[0].profileImage,
     username: req.body[0].username,
     image: req.body[0].profileImage,
     content: req.body[1].message,
