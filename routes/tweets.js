@@ -11,23 +11,24 @@ router.get("/tweets/:id", async (req, res) => {
   res.json(tweets);
 });
 
-router.get("/tweet/forYou", async (req, res) => {
-  const tweets = await Tweet.find().limit(15).lean();
+//visa foryou
+router.get("/tweet/forYou/:id", async (req, res) => {
+  console.log(req.params.id);
+  const tweets = await Tweet.find({ userId: { $ne: req.params.id } })
+    .limit(15)
+    .lean();
   res.json(tweets);
-  console.log("test");
 });
-router.get("/tweet/following", async (req, res) => {
-  console.log("test");
-});
+
+router.get("/tweet/following/:id", async (req, res) => {});
 
 //Skapa en tweet
 router.post("/tweet/:id", async (req, res) => {
-  console.log(req.params.id);
-  console.log(req.body);
   const newTweet = Tweet.create({
     userId: req.params.id,
     name: req.body[0].name,
     username: req.body[0].username,
+    image: req.body[0].profileImage,
     content: req.body[1].message,
   });
 });
