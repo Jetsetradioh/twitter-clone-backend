@@ -14,7 +14,7 @@ router.get("/users", async (req, res) => {
 //visa profilen man klickar på
 router.get("/user/:id", async (req, res) => {
   const user = await User.findById(req.params.id);
-  const tweets = await Tweet.find({ userId: req.params.id });
+  const tweets = await Tweet.find({ userId: req.params.id }).limit(10);
   res.json([user, tweets]);
 });
 
