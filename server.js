@@ -18,7 +18,7 @@ app.use("/api", userRoutes);
 app.use("/api", tweetRoutes);
 
 mongoose
-  .connect("mongodb://localhost:27017/twitter")
+  .connect("mongodb://127.0.0.1:27017/twitter")
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.log(err));
 
