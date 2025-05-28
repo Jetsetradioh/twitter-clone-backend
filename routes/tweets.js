@@ -2,6 +2,7 @@
 
 import express from "express";
 import Tweet from "../models/Tweet.js";
+import User from "../models/User.js";
 
 const router = express.Router();
 
@@ -19,7 +20,17 @@ router.get("/tweet/forYou/:id", async (req, res) => {
   res.json(tweets);
 });
 
-router.get("/tweet/following/:id", async (req, res) => {});
+router.get("/tweet/following/:id", async (req, res) => {
+  const user = await User.findById(req.params.id);
+  let tweets = [];
+
+  for (let i = 0; i < user.friends.length; i++) {
+    let tweet = await Tweet.find({ userId: user.friends[i] }).lean();
+    tweets.push(tweet);
+  }
+  const flatTweets = tweets.flat();
+  res.json(flatTweets);
+});
 
 //Skapa en tweet
 router.post("/tweet/:id", async (req, res) => {
