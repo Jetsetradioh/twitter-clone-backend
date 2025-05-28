@@ -8,7 +8,9 @@ router.post("/checkUser", async (req, res) => {
   const { name } = req.body;
 
   try {
-    const foundUser = await User.findOne({ username: name }).lean();
+    const foundUser = await User.findOne({
+      $or: [{ username: name }, { email: name }],
+    }).lean();
 
     if (foundUser) {
       res.json(foundUser);
@@ -24,7 +26,9 @@ router.post("/login", async (req, res) => {
   const { name, password } = req.body;
 
   try {
-    const foundUser = await User.findOne({ username: name });
+    const foundUser = await User.findOne({
+      $or: [{ username: name }, { email: name }],
+    });
 
     if (!foundUser) {
       return res.status(401).json({ message: "Användaren hittades inte!" });
