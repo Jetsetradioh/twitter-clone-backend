@@ -17,6 +17,22 @@ router.get("/user/:id", async (req, res) => {
   const tweets = await Tweet.find({ userId: req.params.id }).limit(10);
   res.json({ user, tweets });
 });
+//denna är så profile får senaste uppdaterde profil
+router.get("/update-user/:id", async (req, res) => {
+  const user = await User.findById(req.params.id);
+  res.json(user);
+});
+
+router.put("/edit-user/:id", async (req, res) => {
+  console.log(req.body);
+
+  const filteredBody = Object.fromEntries(
+    Object.entries(req.body).filter(([_, value]) => value !== "")
+  );
+
+  const user = await User.findByIdAndUpdate(req.params.id, filteredBody);
+  res.json(user);
+});
 
 router.get("/:username", async (req, res) => {
   const { username } = req.params;
@@ -80,13 +96,13 @@ router.delete("/remove-friend/:id", async (req, res) => {
     }
 
     if (friend.friends.includes(userId)) {
-      friend.friends = friend.friends.filter(id => id.toString() !== userId);
+      friend.friends = friend.friends.filter((id) => id.toString() !== userId);
       friend.followersCount = Math.max(0, friend.followersCount - 1);
       await friend.save();
     }
 
     if (user.friends.includes(friendId)) {
-      user.friends = user.friends.filter(id => id.toString() !== friendId);
+      user.friends = user.friends.filter((id) => id.toString() !== friendId);
       user.followingCount = Math.max(0, user.followingCount - 1);
       await user.save();
     }

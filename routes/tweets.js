@@ -42,6 +42,13 @@ router.post("/tweet/:id", async (req, res) => {
     image: req.body[0].profileImage,
     content: req.body[1].message,
   });
+
+  const user = await User.findById(req.params.id);
+  if (user) {
+    console.log("test");
+    user.tweetsCount += 1;
+    await user.save();
+  }
 });
 
 export default router;
