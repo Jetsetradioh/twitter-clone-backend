@@ -8,13 +8,16 @@ const router = express.Router();
 
 router.get("/tweets/:id", async (req, res) => {
   const id = req.params.id;
-  const tweets = await Tweet.find({ userId: id }).lean();
+  const tweets = await Tweet.find({ userId: id })
+    .sort({ createdAt: -1 })
+    .lean();
   res.json(tweets);
 });
 
 //visa foryou
 router.get("/tweet/forYou/:id", async (req, res) => {
   const tweets = await Tweet.find({ userId: { $ne: req.params.id } })
+    .sort({ createdAt: -1 })
     .limit(15)
     .lean();
   res.json(tweets);
@@ -25,7 +28,9 @@ router.get("/tweet/following/:id", async (req, res) => {
   let tweets = [];
 
   for (let i = 0; i < user.friends.length; i++) {
-    let tweet = await Tweet.find({ userId: user.friends[i] }).lean();
+    let tweet = await Tweet.find({ userId: user.friends[i] })
+      .sort({ createdAt: -1 })
+      .lean();
     tweets.push(tweet);
   }
   const flatTweets = tweets.flat();
