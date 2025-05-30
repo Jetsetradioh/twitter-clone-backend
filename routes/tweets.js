@@ -55,5 +55,58 @@ router.post("/tweet/:id", async (req, res) => {
     await user.save();
   }
 });
+router.get("/tweet/trends", async (req, res) => {
+  try {
+    const tweets = await Tweet.find({}).select("content").lean();
+
+    const wordCount = {};
+    const STOPWORDS = [
+      "och", "att", "det", "som", "en", "på", "i", "för", "är", "med", "till", "av",
+      "de", "har", "vi", "du", "jag", "han", "hon", "dom", "man", "kan", "ska", "var",
+      "så", "om", "inte", "bara", "men", "från", "utan",
+      
+      ..."abcdefghijklmnopqrstuvwxyz".split(""),
+
+      ..."abcdefghijklmnopqrstuvwxyz".split("").map(letter => letter + letter)
+    ];
+
+    tweets.forEach(tweet => {
+      const words = tweet.content
+        .toLowerCase()
+        .replace(/[^\wåäöÅÄÖ]/g, " ")
+        .split(/\s+/)
+        .filter(word => word && !STOPWORDS.includes(word));
+
+      words.forEach(word => {
+        wordCount[word] = (wordCount[word] || 0) + 1;
+      });
+    });
+
+    let trends = Object.entries(wordCount)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 7)
+      .map(([word, count]) => ({
+        type: "trend",
+        topic: word,
+        tweets: `${count} Tweets`,
+        location: "Global",
+      }));
+
+    trends = trends.filter(trend => {
+      const topic = trend.topic;
+      if (topic.startsWith("#")) {
+        return topic.slice(1).length >= 3;
+      }
+      return trend.topic.length >= 3; 
+    });
+
+    res.json(trends);
+  } catch (err) {
+    console.error("Error fetching trends:", err);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+
 
 export default router;
