@@ -34,20 +34,25 @@ router.get("/tweet/following/:id", async (req, res) => {
 
 //Skapa en tweet
 router.post("/tweet/:id", async (req, res) => {
-  const newTweet = Tweet.create({
-    userId: req.params.id,
-    name: req.body[0].name,
-    image: req.body[0].profileImage,
-    username: req.body[0].username,
-    image: req.body[0].profileImage,
-    content: req.body[1].message,
-  });
+  try {
+    const newTweet = await Tweet.create({
+      userId: req.params.id,
+      name: req.body[0].name,
+      image: req.body[0].profileImage,
+      username: req.body[0].username,
+      image: req.body[0].profileImage,
+      content: req.body[1].message,
+    });
 
-  const user = await User.findById(req.params.id);
-  if (user) {
-    console.log("test");
-    user.tweetsCount += 1;
-    await user.save();
+    const user = await User.findById(req.params.id);
+    if (user) {
+      user.tweetsCount += 1;
+      await user.save();
+    }
+    res.status(200).json(newTweet);
+  } catch (err) {
+    console.error("Fel vid skapande av tweet:", err);
+    res.status(500).json({ error: "Något gick fel" });
   }
 });
 

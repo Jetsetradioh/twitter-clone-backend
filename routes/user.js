@@ -17,6 +17,7 @@ router.get("/user/:id", async (req, res) => {
   const tweets = await Tweet.find({ userId: req.params.id }).limit(10);
   res.json({ user, tweets });
 });
+
 //denna är så profile får senaste uppdaterde profil
 router.get("/update-user/:id", async (req, res) => {
   const user = await User.findById(req.params.id);
@@ -30,7 +31,9 @@ router.put("/edit-user/:id", async (req, res) => {
     Object.entries(req.body).filter(([_, value]) => value !== "")
   );
 
-  const user = await User.findByIdAndUpdate(req.params.id, filteredBody);
+  const user = await User.findByIdAndUpdate(req.params.id, filteredBody, {
+    new: true,
+  });
   res.json(user);
 });
 
@@ -47,7 +50,9 @@ router.get("/:username", async (req, res) => {
     res.status(500).json({ error: "Serverfel: " + err.message });
   }
 });
+
 // Lägg till vän
+
 router.post("/add-friend/:id", async (req, res) => {
   const { userId } = req.body;
   const friendId = req.params.id;
